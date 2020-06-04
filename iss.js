@@ -26,6 +26,26 @@ const fetchMyIP = function (callback) {
   });
 };
 
-//198.90.88.144
+const fetchCoordsByIP = (ip, callback) => {
+  request(`https://ipvigilante.com/${ip}`, (err, res, body) => {
+    if (err) {
+      callback(err, null);
+      return;
+    }
 
-module.exports = { fetchMyIP };
+    if (res.statusCode !== 200) {
+      const msg = `Status Code ${res.statusCode} when fetching coordinates for IP. Response: ${body}`;
+      callback(Error(msg), null);
+      return;
+    }
+
+    const data = JSON.parse(body).data;
+    const geoLocation = {
+      latitude: data.latitude,
+      longitude: data.longitude,
+    };
+    callback(null, geoLocation);
+  });
+};
+
+module.exports = { fetchMyIP, fetchCoordsByIP };

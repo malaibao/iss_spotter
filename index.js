@@ -1,5 +1,12 @@
 // index.js
-const { fetchMyIP, fetchCoordsByIP } = require('./iss');
+const {
+  fetchMyIP,
+  fetchCoordsByIP,
+  fetchISSFlyOverTimes,
+  nextISSTimesForMyLocation,
+} = require('./iss');
+let IP;
+let geoLocationObj;
 
 // fetchMyIP((error, ip) => {
 //   if (error) {
@@ -8,13 +15,35 @@ const { fetchMyIP, fetchCoordsByIP } = require('./iss');
 //   }
 
 //   console.log('It worked! Returned IP:', ip);
+//   let IP = ip;
 // });
 
-fetchCoordsByIP('198.90.88.144', (err, geoLocation) => {
+// fetchCoordsByIP(IP, (err, geoLocation) => {
+//   if (err) {
+//     console.error("It didn't work", err);
+//     return;
+//   }
+
+//   console.log('It worked! Returned geoLocation:', geoLocation);
+//   geoLocationObj = geoLocation;
+// });
+
+// geoLocationObj = { latitude: '44.66200', longitude: '-63.60170' };
+
+// fetchISSFlyOverTimes(geoLocationObj, (err, ISSData) => {
+//   if (err) {
+//     console.log(err);
+//     return;
+//   }
+//   console.log(`It worked! Returned flyover times: \n`, ISSData);
+// });
+
+nextISSTimesForMyLocation((err, ISSData) => {
   if (err) {
-    console.error("It didn't work", err);
+    console.error(err);
     return;
   }
 
-  console.log('It worked! Returned geoLocation:', geoLocation);
+  console.log('Successfully gettting ISSData');
+  console.log(ISSData);
 });

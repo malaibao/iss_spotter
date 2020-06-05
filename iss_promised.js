@@ -1,5 +1,14 @@
 const request = require('request-promise-native');
 
+const nextISSTimesForMyLocation = () => {
+  return fetchMyIP()
+    .then(fetchCoordsByIP)
+    .then(fetchISSFlyOverTimes)
+    .then((data) => {
+      return JSON.parse(data).response;
+    });
+};
+
 const fetchMyIP = () => request(`https://api.ipify.org/?format=json`);
 
 const fetchCoordsByIP = (ipString) => {
@@ -15,4 +24,4 @@ const fetchISSFlyOverTimes = (coordsData) => {
   );
 };
 
-module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes };
+module.exports = { nextISSTimesForMyLocation };

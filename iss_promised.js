@@ -4,7 +4,15 @@ const fetchMyIP = () => request(`https://api.ipify.org/?format=json`);
 
 const fetchCoordsByIP = (ipString) => {
   const ip = JSON.parse(ipString).ip;
-  return request(`https://ipvigilante.com/${ip}`);
+  const data = request(`https://ipvigilante.com/${ip}`);
+  return data;
 };
 
-module.exports = { fetchMyIP, fetchCoordsByIP };
+const fetchISSFlyOverTimes = (coordsData) => {
+  const { latitude, longitude } = JSON.parse(coordsData).data;
+  return request(
+    `http://api.open-notify.org/iss-pass.json?lat=${latitude}&lon=${longitude}`
+  );
+};
+
+module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes };
